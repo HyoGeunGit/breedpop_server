@@ -138,14 +138,8 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         else return res.status(404).json({message : "Not Found"})
     })
     app.post('/cm/change', async(req,res)=>{
-        var result = await CM.remove({token : req.body.token})   
+        var result = await CM.remove({docNum : req.body.docNum})   
         var cms = new CM(req.body);
-        let listNum = await CM.find()
-        listNum = listNum.length;
-        cms.docNum = req.body.docNum;
-        cms.token =  req.body.token;
-        cms.nowDate = req.body.date;
-        cms.category = "CM";
         var resultcms = await cms.save();
         if(!resultcms.ok || !result.ok) res.status(200).json(cms);
         else res.status(500).json({message : "fail!"});
@@ -321,16 +315,10 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
     
     app.post('/campaign/change', async(req,res)=>{
-        var result = await CAMPAIGN.remove({token : req.body.token})   
-        var campaign = new CAMPAIGN(req.body);
-        let listNum = await CAMPAIGN.find()
-        listNum = listNum.length;
-        campaign.docNum = req.body.docNum;
-        campaign.token =  req.body.token;
-        campaign.nowDate = req.body.date;
-        campaign.category = "campaign";
-        var resultCampaign = await campaign.save();
-        if(!resultCampaign.ok) res.status(200).json(campaign);
+        var result = await CAMPAIGN.remove({docNum : req.body.docNum})   
+        var cms = new CAMPAIGN(req.body);
+        var resultcms = await cms.save();
+        if(!resultcms.ok || !result.ok) res.status(200).json(cms);
         else res.status(500).json({message : "fail!"});
     })
 
@@ -438,17 +426,11 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
     
     app.post('/mv/change', async(req,res)=>{  
-    var result = await MV.remove({token : req.body.token})   
-    var mvs = new MV(req.body);
-    let listNum = await MV.find()
-    listNum = listNum.length;
-    mvs.docNum = req.body.docNum;
-    mvs.token =  req.body.token;
-    mvs.nowDate = req.body.date;
-    mvs.category = "MV";
-    var resultmvs = await mvs.save();
-    if(!resultmvs.ok || !result.ok) res.status(200).json(mvs);
-    else res.status(500).json({message : "fail!"});
+        var result = await MV.remove({docNum : req.body.docNum})   
+        var cms = new MV(req.body);
+        var resultcms = await cms.save();
+        if(!resultcms.ok || !result.ok) res.status(200).json(cms);
+        else res.status(500).json({message : "fail!"});
     })
 
     app.post('/mv/del', async(req,res)=>{
