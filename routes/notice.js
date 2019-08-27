@@ -119,6 +119,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
 
             list.push(json)
         }
+        console.log("CM/Read : "+{list : list})
         return res.status(200).json({list : list})
     })
     app.post('/cm/pages', async (req,res)=> {
@@ -259,6 +260,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
             campNum++;
             list.push(json)
         }
+        console.log("CAMPAIGN/Read : "+{list : list})
         return res.status(200).json({list : list})
     })
     
@@ -373,6 +375,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
             mvNum++;
             list.push(json)
         }
+        console.log("MV/Read : "+{list : list})
         return res.status(200).json({list : list})
     })
     
