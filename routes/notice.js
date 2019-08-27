@@ -15,8 +15,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 imageUrl: result1[i].imageUrl,
                 docNum: result1[i].docNum,
                 token : result1[i].token,
-                nowDate : result1[i].nowDate,
-                category: "CM"
+                nowDate : result1[i].nowDate
             }
 
             list.push(json)
@@ -30,8 +29,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 imageUrl: result2[i].imageUrl,
                 docNum: result2[i].docNum,
                 token : result2[i].token,
-                nowDate : result1[i].nowDate,
-                category: "CAMPAIGN"
+                nowDate : result1[i].nowDate
             }
 
             list.push(json)
@@ -45,8 +43,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 imageUrl: result3[i].imageUrl,
                 docNum: result3[i].docNum,
                 token : result3[i].token,
-                nowDate : result1[i].nowDate,
-                category: "MV"
+                nowDate : result1[i].nowDate
             }
 
             list.push(json)
@@ -87,6 +84,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         cms.docNum = listNum + 1;
         cms.token =  rndstring.generate(23);
         cms.nowDate = today;
+        cms.category = "CM";
         var resultCm = await cms.save();    
         if(!resultCm.ok) res.status(200).json(cms);
         else res.status(500).json({message : "fail!"});
@@ -203,6 +201,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         campaign.docNum = listNum + 1;
         campaign.token =  rndstring.generate(23);
         campaign.nowDate = today;
+        campaign.category = "campaign";
         var resultCampaign = await campaign.save();
         if(!resultCampaign.ok) res.status(200).json(campaign);
         else res.status(500).json({message : "fail!"});
@@ -290,6 +289,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         mv.docNum = listNum + 1;
         mv.token =  rndstring.generate(23);
         mv.nowDate = today;
+        mv.category = "MV";
         var resultMv = await mv.save();
         if(!resultMv.ok) res.status(200).json(mv);
         else res.status(500).json({message : "fail!"});
