@@ -255,7 +255,6 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 token : result[i].token,
                 nowDate : result[i].nowDate
             }
-            campNum++;
             list.push(json)
         }
         return res.status(200).json({list : list})
@@ -314,6 +313,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 token : result[i].token,
                 nowDate : result[i].nowDate
             }
+            campNum++;
             list.push(json)
         }
         return res.status(200).json({list : list})
