@@ -243,7 +243,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
 
     app.post('/campaign/read', async(req,res)=>{
         let result = await CAMPAIGN.find().sort({ docNum : -1 });
-        let list = [];\
+        let list = [];
         for (var i=0; result[i] != null; i++) {
             let json = {
                 title : result[i].title,
