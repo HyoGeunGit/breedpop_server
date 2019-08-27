@@ -198,6 +198,9 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         } 
         today = yyyy+mm+dd;
         var campaign = new CAMPAIGN(req.body);
+        let listNum = await CAMPAIGN.find()
+        listNum = listNum.length;
+        campaign.docNum = listNum + 1;
         campaign.token =  rndstring.generate(23);
         campaign.nowDate = today;
         var resultCampaign = await campaign.save();
@@ -282,6 +285,9 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         } 
         today = yyyy+mm+dd;
         var mv = new MV(req.body);
+        let listNum = await MV.find()
+        listNum = listNum.length;
+        mv.docNum = listNum + 1;
         mv.token =  rndstring.generate(23);
         mv.nowDate = today;
         var resultMv = await mv.save();
