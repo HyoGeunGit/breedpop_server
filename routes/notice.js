@@ -76,6 +76,33 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         return res.status(200).json({list : list})
     })
 
+    app.post('/cm/change/pdocnum',async(req, res)=>{
+        let soda =  await CM.findOne({docNum : parseInt(req.body.docNum) + 1});
+        let originSoda = await CM.findOne({docNum : req.body.docNum});
+        console.log(1 + req.body.docNum, originSoda)
+        let sodaUpdate = await CM.update({token : soda.token}, {
+            $set : {docNum : soda.docNum - 1}
+        })
+        let originSodaUpdate = await CM.update({token : originSoda.token}, {
+            $set : {docNum : originSoda.docNum + 1}
+        })
+        if(!sodaUpdate.ok||!originSodaUpdate.ok) return res.status(500).json({message : "ERR!"})
+        else return res.status(200).json({message : "success!"})
+    })
+
+    app.post('/cm/change/mdocnum',async(req, res)=>{
+        let soda =  await CM.findOne({docNum : parseInt(req.body.docNum) -1 });
+        let originSoda = await CM.findOne({docNum : req.body.docNum});
+
+        let sodaUpdate = await CM.update({token : soda.token}, {
+            $set : {docNum : soda.docNum + 1}
+        })
+        let originSodaUpdate = await CM.update({token : originSoda.token}, {
+            $set : {docNum : originSoda.docNum - 1}
+        })
+        if(!sodaUpdate.ok||!originSodaUpdate.ok) return res.status(500).json({message : "ERR!"})
+        else return res.status(200).json({message : "success!"})
+    })
     app.post('/campaign/write', async(req,res)=>{
         var campaign = new CAMPAIGN(req.body);
         campaign.token =  rndstring.generate(23);
