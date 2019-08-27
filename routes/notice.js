@@ -299,7 +299,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
 
     app.post('/campaign/search/:title', async(req,res)=>{
-        let result = await CAMPAIGN.find({title : req.body.title})
+        let result = await CAMPAIGN.find({title : {$regex: req.params.title, $options:"$i"}})
         let list = []
         let campNum = 1;
         for( var i = 0; result[i] != null; i++) {
@@ -411,7 +411,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
 
     app.post('/mv/search/:title', async(req,res)=>{
-        let result = await MV.find({title : req.body.title})
+        let result = await MV.find({title : {$regex: req.params.title, $options:"$i"}})
         let list = []
         let mvNum = 1;
         for( var i = 0; result[i] != null; i++) {
