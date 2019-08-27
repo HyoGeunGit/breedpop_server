@@ -270,6 +270,12 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         res.status(200).send({list: rList})
     })
 
+    app.post('/campaign/page', async ( req,res)=> {
+        let post = await CAMPAIGN.findOne({docNum : req.body.num})
+        if(post) return res.status(200).json({post : post})
+        else return res.status(404).json({message : "Not Found"})
+    })
+
     app.post('/campaign/search/:title', async(req,res)=>{
         let result = await CAMPAIGN.find({title : req.body.title})
         let list = []
@@ -366,6 +372,12 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
             rList.push(json)
         }
         res.status(200).send({list: rList})
+    })
+
+    app.post('/mv/page', async ( req,res)=> {
+        let post = await MV.findOne({docNum : req.body.num})
+        if(post) return res.status(200).json({post : post})
+        else return res.status(404).json({message : "Not Found"})
     })
 
     app.post('/mv/search/:title', async(req,res)=>{

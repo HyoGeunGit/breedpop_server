@@ -17,7 +17,7 @@ require('./mongo');
 require('./routes/auth')(app,Users,rndstring);
 require('./routes/notice')(app, CM, CAMPAIGN, MV, rndstring);
 
-app.listen(3000, ()=>{
+app.listen(3001, ()=>{
   console.log('Server On!');
 })
 
