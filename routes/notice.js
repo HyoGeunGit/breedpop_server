@@ -119,7 +119,6 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
 
             list.push(json)
         }
-        console.log("CM/Read : "+ result)
         return res.status(200).json({list : list})
     })
     app.post('/cm/pages', async (req,res)=> {
@@ -244,8 +243,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
 
     app.post('/campaign/read', async(req,res)=>{
         let result = await CAMPAIGN.find().sort({ docNum : -1 });
-        let list = [];
-        let campNum = 1;
+        let list = [];\
         for (var i=0; result[i] != null; i++) {
             let json = {
                 title : result[i].title,
@@ -253,14 +251,13 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 agency: result[i].agency,
                 production: result[i].production,
                 imageUrl: result[i].imageUrl,
-                docNum: campNum,
+                docNum: result[i].docNum,
                 token : result[i].token,
                 nowDate : result[i].nowDate
             }
             campNum++;
             list.push(json)
-        }
-        console.log("CAMPAIGN/Read : "+result)
+        }\
         return res.status(200).json({list : list})
     })
     
@@ -360,7 +357,6 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     app.post('/mv/read', async(req,res)=>{
         let result = await MV.find().sort({ docNum : -1 });
         let list = [];
-        let mvNum = 1;
         for (var i=0; result[i] != null; i++) {
             let json = {
                 title : result[i].title,
@@ -368,14 +364,13 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 agency: result[i].agency,
                 production: result[i].production,
                 imageUrl: result[i].imageUrl,
-                docNum: mvNum,
+                docNum:  result[i].docNum,
                 token : result[i].token,
                 nowDate : result[i].nowDate
             }
             mvNum++;
             list.push(json)
         }
-        console.log("MV/Read : "+result)
         return res.status(200).json({list : list})
     })
     
