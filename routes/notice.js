@@ -152,9 +152,14 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
 
     app.post('/cm/del', async(req,res)=>{
-        var result = await CM.remove({token : req.body.token})
-        if(!result.ok) return res.status(500).json({message : "ERR!"})
-        else return res.status(200).json({message : "success!"})
+        var result = await CM.remove({docNum : req.body.docNum})
+        var list = await CM.find()
+        for ( var i = parseInt(req.body.docNum)+1; i <= list.length+1;i++) {
+            let upateResult = await CM.update({ docNum : i }, {
+                $set : { docNum : i - 1}
+            })
+        }
+        return res.status(200).json({message : "success!"})
     })
 
     app.post('/cm/search/:title', async(req,res)=>{
@@ -330,9 +335,14 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
 
     app.post('/campaign/del', async(req,res)=>{
-        var result = await CAMPAIGN.remove({token : req.body.token})
-        if(!result.ok) return res.status(500).json({message : "ERR!"})
-        else return res.status(200).json({message : "success!"})
+        var result = await CAMPAIGN.remove({docNum : req.body.docNum})
+        var list = await CAMPAIGN.find()
+        for ( var i = parseInt(req.body.docNum)+1; i <= list.length+1;i++) {
+            let upateResult = await CAMPAIGN.update({ docNum : i }, {
+                $set : { docNum : i - 1}
+            })
+        }
+        return res.status(200).json({message : "success!"})
     })
 
     app.post('/campaign/pages', async (req,res)=> {
@@ -444,7 +454,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     app.post('/mv/del', async(req,res)=>{
         var result = await MV.remove({docNum : req.body.docNum})
         var list = await MV.find()
-        for ( var i = parseInt(req.body.docNum); i < list.length;i++) {
+        for ( var i = parseInt(req.body.docNum)+1; i <= list.length+1;i++) {
             let upateResult = await MV.update({ docNum : i }, {
                 $set : { docNum : i - 1}
             })
