@@ -91,7 +91,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
     // length - (page - 1 ) * 10 부터 length - page * 10 까지 findOne으로 10개씩 찾아서 list에 push
     app.post('/cm/read', async(req,res)=>{
-        let result = await CM.find();
+        let result = await CM.find().sort({ docNum : -1 });
         let list = [];
         for (var i=0; result[i] != null; i++) {
             let json = {
@@ -218,7 +218,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
 
     app.post('/campaign/read', async(req,res)=>{
-        let result = await CAMPAIGN.find();
+        let result = await CAMPAIGN.find().sort({ docNum : -1 });
         let list = [];
         let campNum = 1;
         for (var i=0; result[i] != null; i++) {
@@ -316,7 +316,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
 
     app.post('/mv/read', async(req,res)=>{
-        let result = await MV.find();
+        let result = await MV.find().sort({ docNum : -1 });
         let list = [];
         let mvNum = 1;
         for (var i=0; result[i] != null; i++) {
