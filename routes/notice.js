@@ -52,8 +52,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
 
     })
 
-    app.post('//
-             /pages', async(req,res)=>{
+    app.post('/cm/pages', async(req,res)=>{
         let list2 = await CM.find().sort({ docNum : -1 }) 
         let list3 = await CAMPAIGN.find().sort({ docNum : -1 }) 
         let list4 = await MV.find().sort({ docNum : -1 }) 
