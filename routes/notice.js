@@ -102,7 +102,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 imageUrl: result[i].imageUrl,
                 docNum: result[i].docNum,
                 token : result[i].token,
-                nowDate : result1[i].nowDate
+                nowDate : result[i].nowDate
             }
 
             list.push(json)
@@ -148,7 +148,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 imageUrl: result[i].imageUrl,
                 docNum: cmNum,
                 token : result[i].token,
-                nowDate : result1[i].nowDate
+                nowDate : result[i].nowDate
             }
             list.push(json)
             cmNum++;
@@ -220,7 +220,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 imageUrl: result[i].imageUrl,
                 docNum: campNum,
                 token : result[i].token,
-                nowDate : result1[i].nowDate
+                nowDate : result[i].nowDate
             }
             campNum++;
             list.push(json)
@@ -263,7 +263,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 imageUrl: result[i].imageUrl,
                 docNum: campNum,
                 token : result[i].token,
-                nowDate : result1[i].nowDate
+                nowDate : result[i].nowDate
             }
             campNum++;
             list.push(json)
@@ -308,7 +308,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 imageUrl: result[i].imageUrl,
                 docNum: mvNum,
                 token : result[i].token,
-                nowDate : result1[i].nowDate
+                nowDate : result[i].nowDate
             }
             mvNum++;
             list.push(json)
@@ -358,7 +358,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 imageUrl: result[i].imageUrl,
                 docNum: mvNum,
                 token : result[i].token,
-                nowDate : result1[i].nowDate
+                nowDate : result[i].nowDate
             }
             mvNum++;
             list.push(json)
