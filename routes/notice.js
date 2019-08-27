@@ -126,7 +126,17 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         else return res.status(404).json({message : "Not Found"})
     })
     app.post('/cm/change', async(req,res)=>{
-
+        var result = await CM.remove({token : req.body.token})   
+        var cms = new CM(req.body);
+        let listNum = await CM.find()
+        listNum = listNum.length;
+        cms.docNum = req.body.docNum;
+        cms.token =  req.body.token;
+        cms.nowDate = req.body.date;
+        cms.category = "CM";
+        var resultcms = await cms.save();
+        if(!resultcms.ok || !result.ok) res.status(200).json(cms);
+        else res.status(500).json({message : "fail!"});
     })
 
     app.post('/cm/del', async(req,res)=>{
@@ -229,7 +239,17 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
     
     app.post('/campaign/change', async(req,res)=>{
-
+        var result = await CAMPAIGN.remove({token : req.body.token})   
+        var campaign = new CAMPAIGN(req.body);
+        let listNum = await CAMPAIGN.find()
+        listNum = listNum.length;
+        campaign.docNum = req.body.docNum;
+        campaign.token =  req.body.token;
+        campaign.nowDate = req.body.date;
+        campaign.category = "campaign";
+        var resultCampaign = await campaign.save();
+        if(!resultCampaign.ok) res.status(200).json(campaign);
+        else res.status(500).json({message : "fail!"});
     })
 
     app.post('/campaign/del', async(req,res)=>{
@@ -316,15 +336,18 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         return res.status(200).json({list : list})
     })
     
-    app.post('/mv/change', async(req,res)=>{
-        var result = await MV.remove({token : req.body.token})
-        var cms = new CM(req.body);
-        cms.token =  rndstring.generate(23);
-        var resultCm = await cms.save();    
-        if(!resultCm.ok) res.status(200).json(cms);
-        else res.status(500).json({message : "fail!"});
-        if(!result.ok) return res.status(500).json({message : "ERR!"})
-        else return res.status(200).json({message : "success!"})
+    app.post('/mv/change', async(req,res)=>{  
+    var result = await MV.remove({token : req.body.token})   
+    var mvs = new MV(req.body);
+    let listNum = await MV.find()
+    listNum = listNum.length;
+    mvs.docNum = req.body.docNum;
+    mvs.token =  req.body.token;
+    mvs.nowDate = req.body.date;
+    mvs.category = "MV";
+    var resultmvs = await mvs.save();
+    if(!resultmvs.ok || !result.ok) res.status(200).json(mvs);
+    else res.status(500).json({message : "fail!"});
     })
 
     app.post('/mv/del', async(req,res)=>{
