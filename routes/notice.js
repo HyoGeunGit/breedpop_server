@@ -257,7 +257,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
             }
             campNum++;
             list.push(json)
-        }\
+        }
         return res.status(200).json({list : list})
     })
     
