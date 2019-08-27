@@ -205,6 +205,61 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         if(!sodaUpdate.ok||!originSodaUpdate.ok) return res.status(500).json({message : "ERR!"})
         else return res.status(200).json({message : "success!"})
     })
+    
+    app.post('/mv/change/pdocnum',async(req, res)=>{
+        let soda =  await MV.findOne({docNum : parseInt(req.body.docNum) + 1});
+        let originSoda = await MV.findOne({docNum : req.body.docNum});
+        console.log(1 + req.body.docNum, originSoda)
+        let sodaUpdate = await MV.update({token : soda.token}, {
+            $set : {docNum : soda.docNum - 1}
+        })
+        let originSodaUpdate = await MV.update({token : originSoda.token}, {
+            $set : {docNum : originSoda.docNum + 1}
+        })
+        if(!sodaUpdate.ok||!originSodaUpdate.ok) return res.status(500).json({message : "ERR!"})
+        else return res.status(200).json({message : "success!"})
+    })
+    app.post('/mv/change/mdocnum',async(req, res)=>{
+        let soda =  await MV.findOne({docNum : parseInt(req.body.docNum) -1 });
+        let originSoda = await MV.findOne({docNum : req.body.docNum});
+
+        let sodaUpdate = await MV.update({token : soda.token}, {
+            $set : {docNum : soda.docNum + 1}
+        })
+        let originSodaUpdate = await MV.update({token : originSoda.token}, {
+            $set : {docNum : originSoda.docNum - 1}
+        })
+        if(!sodaUpdate.ok||!originSodaUpdate.ok) return res.status(500).json({message : "ERR!"})
+        else return res.status(200).json({message : "success!"})
+    })
+    
+    app.post('/campaign/change/pdocnum',async(req, res)=>{
+        let soda =  await CAMPAIGN.findOne({docNum : parseInt(req.body.docNum) + 1});
+        let originSoda = await CAMPAIGN.findOne({docNum : req.body.docNum});
+        console.log(1 + req.body.docNum, originSoda)
+        let sodaUpdate = await CAMPAIGN.update({token : soda.token}, {
+            $set : {docNum : soda.docNum - 1}
+        })
+        let originSodaUpdate = await CAMPAIGN.update({token : originSoda.token}, {
+            $set : {docNum : originSoda.docNum + 1}
+        })
+        if(!sodaUpdate.ok||!originSodaUpdate.ok) return res.status(500).json({message : "ERR!"})
+        else return res.status(200).json({message : "success!"})
+    })
+
+    app.post('/campaign/change/mdocnum',async(req, res)=>{
+        let soda =  await CAMPAIGN.findOne({docNum : parseInt(req.body.docNum) -1 });
+        let originSoda = await CAMPAIGN.findOne({docNum : req.body.docNum});
+
+        let sodaUpdate = await CAMPAIGN.update({token : soda.token}, {
+            $set : {docNum : soda.docNum + 1}
+        })
+        let originSodaUpdate = await CAMPAIGN.update({token : originSoda.token}, {
+            $set : {docNum : originSoda.docNum - 1}
+        })
+        if(!sodaUpdate.ok||!originSodaUpdate.ok) return res.status(500).json({message : "ERR!"})
+        else return res.status(200).json({message : "success!"})
+    })
     app.post('/campaign/write', async(req,res)=>{   
         var today = new Date();
         var dd = today.getDate();
