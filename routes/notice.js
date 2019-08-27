@@ -66,6 +66,18 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         }
         res.status(200).send({list: rList})
     })
+
+
+    app.post('/cm/maxchk', async(req,res)=>{
+        let result = await CM.find();
+        if ( parseInt(req.body.docNum) == result.length){
+            return res.status(200).json(true)
+        }
+        else{
+           return res.status(200).json(false)
+        }
+    })
+
     app.post('/cm/write', async(req,res)=>{
         var today = new Date();
         var dd = today.getDate();
@@ -217,6 +229,18 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         else res.status(500).json({message : "fail!"});
     })
 
+
+
+    app.post('/campaign/maxchk', async(req,res)=>{
+        let result = await CAMPAIGN.find();
+        if ( parseInt(req.body.docNum) == result.length){
+           return res.status(200).json(true)
+        }
+        else{
+            return res.status(200).json(false)
+        }
+    })
+
     app.post('/campaign/read', async(req,res)=>{
         let result = await CAMPAIGN.find().sort({ docNum : -1 });
         let list = [];
@@ -295,6 +319,16 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
             list.push(json)
         }
         return res.status(200).json({list : list})
+    })
+
+    app.post('/mv/maxchk', async(req,res)=>{
+        let result = await MV.find();
+        if ( parseInt(req.body.docNum) == result.length){
+           return res.status(200).json(true)
+        }
+        else{
+           return res.status(200).json(false)
+        }
     })
 
     app.post('/mv/write', async(req,res)=>{
