@@ -1,12 +1,92 @@
 module.exports = notice;
 
 function notice(app, CM, CAMPAIGN, MV, rndstring){
+    app.post('/all/read', async(req,res)=>{
+        let result1 = await CM.find();
+        let result2= await CAMPAIGN.find();
+        let result3 = await MV.find();
+        let list = [];
+        for (var i=0; result1[i] != null; i++) {
+            let json = {
+                title : result1[i].title,
+                brand : result1[i].brand,
+                agency: result1[i].agency,
+                production: result1[i].production,
+                imageUrl: result1[i].imageUrl,
+                docNum: result1[i].docNum,
+                token : result1[i].token,
+                nowDate : result1[i].nowDate,
+                category: "CM"
+            }
+
+            list.push(json)
+        }
+        for (var i=0; result2[i] != null; i++) {
+            let json = {
+                title : result2[i].title,
+                brand : result2[i].brand,
+                agency: result2[i].agency,
+                production: result2[i].production,
+                imageUrl: result2[i].imageUrl,
+                docNum: result2[i].docNum,
+                token : result2[i].token,
+                nowDate : result1[i].nowDate,
+                category: "CAMPAIGN"
+            }
+
+            list.push(json)
+        }
+        for (var i=0; result3[i] != null; i++) {
+            let json = {
+                title : result3[i].title,
+                brand : result3[i].brand,
+                agency: result3[i].agency,
+                production: result3[i].production,
+                imageUrl: result3[i].imageUrl,
+                docNum: result3[i].docNum,
+                token : result3[i].token,
+                nowDate : result1[i].nowDate,
+                category: "MV"
+            }
+
+            list.push(json)
+        }
+        return res.status(200).json({list : list})
+
+    })
+
+    app.post('/all/pages', async(req,res)=>{
+        let list2 = await CM.find().sort({ docNum : -1 }) 
+        let list3 = await CAMPAIGN.find().sort({ docNum : -1 }) 
+        let list4 = await MV.find().sort({ docNum : -1 }) 
+        let list = list2 + list3 + list4;
+        let page = req.body.page
+        var rList = []
+        for ( var i = list.length - (( page - 1 ) * 10 ); i > list.length - (page * 10 ); i--) {
+            let json = await CM.findOne({docNum : i});
+            if(!json) break;
+            rList.push(json)
+        }
+        res.status(200).send({list: rList})
+    })
     app.post('/cm/write', async(req,res)=>{
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10) {
+            dd='0'+dd
+        } 
+        if(mm<10) {
+            mm='0'+mm
+        } 
+        today = yyyy+mm+dd;
         var cms = new CM(req.body);
         let listNum = await CM.find()
         listNum = listNum.length;
         cms.docNum = listNum + 1;
         cms.token =  rndstring.generate(23);
+        cms.nowDate = today;
         var resultCm = await cms.save();    
         if(!resultCm.ok) res.status(200).json(cms);
         else res.status(500).json({message : "fail!"});
@@ -23,7 +103,8 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 production: result[i].production,
                 imageUrl: result[i].imageUrl,
                 docNum: result[i].docNum,
-                token : result[i].token
+                token : result[i].token,
+                nowDate : result1[i].nowDate
             }
 
             list.push(json)
@@ -68,7 +149,8 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 production: result[i].production,
                 imageUrl: result[i].imageUrl,
                 docNum: cmNum,
-                token : result[i].token
+                token : result[i].token,
+                nowDate : result1[i].nowDate
             }
             list.push(json)
             cmNum++;
@@ -103,9 +185,21 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         if(!sodaUpdate.ok||!originSodaUpdate.ok) return res.status(500).json({message : "ERR!"})
         else return res.status(200).json({message : "success!"})
     })
-    app.post('/campaign/write', async(req,res)=>{
+    app.post('/campaign/write', async(req,res)=>{   
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10) {
+            dd='0'+dd
+        } 
+        if(mm<10) {
+            mm='0'+mm
+        } 
+        today = yyyy+mm+dd;
         var campaign = new CAMPAIGN(req.body);
         campaign.token =  rndstring.generate(23);
+        campaign.nowDate = today;
         var resultCampaign = await campaign.save();
         if(!resultCampaign.ok) res.status(200).json(campaign);
         else res.status(500).json({message : "fail!"});
@@ -123,7 +217,8 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 production: result[i].production,
                 imageUrl: result[i].imageUrl,
                 docNum: campNum,
-                token : result[i].token
+                token : result[i].token,
+                nowDate : result1[i].nowDate
             }
             campNum++;
             list.push(json)
@@ -153,7 +248,8 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 production: result[i].production,
                 imageUrl: result[i].imageUrl,
                 docNum: campNum,
-                token : result[i].token
+                token : result[i].token,
+                nowDate : result1[i].nowDate
             }
             campNum++;
             list.push(json)
@@ -162,8 +258,20 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
 
     app.post('/mv/write', async(req,res)=>{
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10) {
+            dd='0'+dd
+        } 
+        if(mm<10) {
+            mm='0'+mm
+        } 
+        today = yyyy+mm+dd;
         var mv = new MV(req.body);
         mv.token =  rndstring.generate(23);
+        mv.nowDate = today;
         var resultMv = await mv.save();
         if(!resultMv.ok) res.status(200).json(mv);
         else res.status(500).json({message : "fail!"});
@@ -181,7 +289,8 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 production: result[i].production,
                 imageUrl: result[i].imageUrl,
                 docNum: mvNum,
-                token : result[i].token
+                token : result[i].token,
+                nowDate : result1[i].nowDate
             }
             mvNum++;
             list.push(json)
@@ -218,7 +327,8 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 production: result[i].production,
                 imageUrl: result[i].imageUrl,
                 docNum: mvNum,
-                token : result[i].token
+                token : result[i].token,
+                nowDate : result1[i].nowDate
             }
             mvNum++;
             list.push(json)

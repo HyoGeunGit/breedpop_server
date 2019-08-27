@@ -22,6 +22,7 @@ var CmSchema = mongoose.Schema({
   imageUrl: {type: String},
   videoUrl: {type : String},
   docNum: {type: Number},
+  nowDate : {type : String},
   list: [
     {
       title : {type: String},
@@ -42,6 +43,7 @@ var CampaignSchema = mongoose.Schema({
   imageUrl: {type: String},
   videoUrl: {type : String},
   docNum: {type: Number},
+  nowDate : {type : String},
   list: [
     {
       title : {type: String},
@@ -62,6 +64,7 @@ var MvSchema = mongoose.Schema({
   imageUrl: {type: String},
   videoUrl: {type : String},
   docNum: {type: Number},
+  nowDate : {type : String},
   list: [
     {
       title : {type: String},
