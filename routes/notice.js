@@ -444,7 +444,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     app.post('/mv/del', async(req,res)=>{
         var result = await MV.remove({docNum : req.body.docNum})
         var list = await MV.find()
-        for ( var i = parseInt(req.body.docNum); i <= list.length;i++) {
+        for ( var i = parseInt(req.body.docNum); i < list.length;i++) {
             let upateResult = await MV.update({ docNum : i }, {
                 $set : { docNum : i - 1}
             })
