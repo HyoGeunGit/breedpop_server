@@ -236,6 +236,18 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         else return res.status(200).json({message : "success!"})
     })
 
+    app.post('/campaign/pages', async (req,res)=> {
+        let list = await CAMPAIGN.find().sort({ docNum : -1 })
+        let page = req.body.page
+        var rList = []
+        for ( var i = list.length - (( page - 1 ) * 10 ); i > list.length - (page * 10 ); i--) {
+            let json = await CAMPAIGN.findOne({docNum : i});
+            if(!json) break;
+            rList.push(json)
+        }
+        res.status(200).send({list: rList})
+    })
+
     app.post('/campaign/search/:title', async(req,res)=>{
         let result = await CAMPAIGN.find({title : req.body.title})
         let list = []
@@ -313,6 +325,18 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
         var result = await MV.remove({token : req.body.token})
         if(!result.ok) return res.status(500).json({message : "ERR!"})
         else return res.status(200).json({message : "success!"})
+    })
+
+    app.post('/mv/pages', async (req,res)=> {
+        let list = await MV.find().sort({ docNum : -1 })
+        let page = req.body.page
+        var rList = []
+        for ( var i = list.length - (( page - 1 ) * 10 ); i > list.length - (page * 10 ); i--) {
+            let json = await MV.findOne({docNum : i});
+            if(!json) break;
+            rList.push(json)
+        }
+        res.status(200).send({list: rList})
     })
 
     app.post('/mv/search/:title', async(req,res)=>{
