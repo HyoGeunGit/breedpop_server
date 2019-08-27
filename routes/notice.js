@@ -12,10 +12,10 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 brand : result1[i].brand,
                 agency: result1[i].agency,
                 production: result1[i].production,
-                imageUrl: result1[i].imageUrl,
                 docNum: result1[i].docNum,
                 token : result1[i].token,
-                nowDate : result1[i].nowDate
+                nowDate : result1[i].nowDate,
+                category: result1[i].category
             }
 
             list.push(json)
@@ -26,10 +26,10 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 brand : result2[i].brand,
                 agency: result2[i].agency,
                 production: result2[i].production,
-                imageUrl: result2[i].imageUrl,
                 docNum: result2[i].docNum,
                 token : result2[i].token,
-                nowDate : result1[i].nowDate
+                nowDate : result2[i].nowDate,
+                category: result2[i].category
             }
 
             list.push(json)
@@ -40,10 +40,10 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
                 brand : result3[i].brand,
                 agency: result3[i].agency,
                 production: result3[i].production,
-                imageUrl: result3[i].imageUrl,
                 docNum: result3[i].docNum,
                 token : result3[i].token,
-                nowDate : result1[i].nowDate
+                nowDate : result3[i].nowDate,
+                category: result3[i].category
             }
 
             list.push(json)
@@ -52,7 +52,8 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
 
     })
 
-    app.post('/all/pages', async(req,res)=>{
+    app.post('//
+             /pages', async(req,res)=>{
         let list2 = await CM.find().sort({ docNum : -1 }) 
         let list3 = await CAMPAIGN.find().sort({ docNum : -1 }) 
         let list4 = await MV.find().sort({ docNum : -1 }) 
