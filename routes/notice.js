@@ -103,7 +103,7 @@ function notice(app, CM, CAMPAIGN, MV, rndstring){
     })
     // length - (page - 1 ) * 10 부터 length - page * 10 까지 findOne으로 10개씩 찾아서 list에 push
     app.post('/cm/read', async(req,res)=>{
-        let result = await CM.find().sort({ docNum : -1 }, {allowDiskUse: true});
+        let result = await CM.find().sort({ docNum : -1 });
         let list = [];
         for (var i=0; result[i] != null; i++) {
             let json = {
